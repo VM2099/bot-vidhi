@@ -1,0 +1,104 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<!-- viewport-fit=cover lets us use the iPhone safe-area insets below -->
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#fdf6fa">
+<meta name="description" content="Talk to Bot Vidhi while she is asleep.">
+<title>Bot Vidhi</title>
+<link rel="stylesheet" href="css/app.css">
+</head>
+<body>
+
+<!-- Shown only on a development host. On GitHub Pages it stays hidden,
+     because store.js refuses to switch roles off a dev host. -->
+<div class="devbar" id="devbar" hidden>
+  <span class="devbar__tag">DEV</span>
+  <span>mock mode · data stays in this browser</span>
+  <span class="devbar__spacer"></span>
+  <button type="button" class="devbar__btn" id="devRole">I am: him</button>
+  <button type="button" class="devbar__btn" id="devReset">clear data</button>
+</div>
+
+<header class="stage">
+  <img class="stage__avatar" id="avatar" src="assets/avatars/avatar-neutral.png"
+       alt="Cartoon Vidhi" width="209" height="363">
+  <h1 class="stage__greeting" id="greeting">Hello</h1>
+
+  <div class="clocks">
+    <div class="clock">
+      <span class="clock__label">you · Tokyo</span>
+      <strong class="clock__time" id="clockTokyo">--:--</strong>
+    </div>
+    <div class="clock">
+      <span class="clock__label">Vids · Rochester</span>
+      <strong class="clock__time" id="clockNy">--:--</strong>
+    </div>
+  </div>
+  <p class="sleepnote" id="sleepnote"></p>
+</header>
+
+<main class="sheet">
+
+  <!-- The latest auto reply. aria-live so a screen reader announces it. -->
+  <section class="reply" id="replyCard" aria-live="polite" hidden></section>
+
+  <h2 class="sr-only">What do you want to tell her?</h2>
+  <div class="actions">
+    <button type="button" class="action" data-act="mood">
+      <span class="action__icon" aria-hidden="true">&#128522;</span>Mood
+    </button>
+    <button type="button" class="action" data-act="win">
+      <span class="action__icon" aria-hidden="true">&#127881;</span>Win
+    </button>
+    <button type="button" class="action" data-act="vent">
+      <span class="action__icon" aria-hidden="true">&#128548;</span>Vent
+    </button>
+    <button type="button" class="action action--love" data-act="miss_you">
+      <span class="action__icon" aria-hidden="true">&#128151;</span>I miss you
+    </button>
+    <button type="button" class="action" data-act="voice_note">
+      <span class="action__icon" aria-hidden="true">&#127897;</span>Voice note
+    </button>
+  </div>
+
+  <!-- One composer, reused by Win and Vent. -->
+  <section class="composer" id="composer" hidden>
+    <label class="composer__label" id="composerLabel" for="composerText">Tell her</label>
+    <textarea class="composer__text" id="composerText" rows="3" maxlength="1000"></textarea>
+    <div class="composer__row">
+      <button type="button" class="btn btn--ghost" id="composerCancel">Cancel</button>
+      <button type="button" class="btn" id="composerSend">Send</button>
+    </div>
+  </section>
+
+  <!-- The mood chips, shown when Mood is tapped. -->
+  <section class="moods" id="moods" hidden>
+    <p class="moods__label">How are you right now?</p>
+    <div class="moods__row" id="moodRow"></div>
+  </section>
+
+  <h2 class="feed__heading" id="feedHeading">Recent</h2>
+  <ul class="feed" id="feed"></ul>
+  <p class="empty" id="empty" hidden></p>
+</main>
+
+<nav class="tabs" aria-label="Views">
+  <button type="button" class="tab" data-tab="recent" aria-pressed="true">
+    <span aria-hidden="true">&#128339;</span>Recent</button>
+  <button type="button" class="tab" data-tab="bot" aria-pressed="false">
+    <span aria-hidden="true">&#127897;</span>Bot replies</button>
+  <button type="button" class="tab" data-tab="vids" aria-pressed="false">
+    <span aria-hidden="true">&#128156;</span>Vids</button>
+  <button type="button" class="tab" data-tab="all" aria-pressed="false">
+    <span aria-hidden="true">&#128220;</span>History</button>
+</nav>
+
+<!-- store.js first: app.js depends on the global it creates.
+     Plain scripts, not modules, so this page also works when opened
+     straight off disk while building. -->
+<script src="js/store.js"></script>
+<script src="js/app.js"></script>
+</body>
+</html>
